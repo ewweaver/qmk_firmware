@@ -32,7 +32,8 @@ enum preonic_keycodes {
   DVORAK,
   LOWER,
   RAISE,
-  BACKLIT
+  BACKLIT,
+  VSBACK
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -106,7 +107,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * |  Tab |      |      |      |      |      |      |   4  |   5  |   6  |   -  | Mute |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |  calc|      |      |      |      |      |      |   1  |   2  |   3  |   *  |  =   |
+ * |  calc|      |      |ctrl+-| F12  |      |      |   1  |   2  |   3  |   *  |  =   |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Shift|      |      |      |      |      |      |      |  0   |  .   |   /  | Enter|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -116,7 +117,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_LOWER] = {
   {KC_ESC,                KC_MPLY, KC_MSTP, KC_PSCR, KC_SLCK, KC_PAUS, _______, KC_7,    KC_8,    KC_9,    KC_PLUS, KC_BSPC},
   {KC_TAB,                _______, _______, _______, _______, _______, _______, KC_4,    KC_5,    KC_6,    KC_MINS, KC_MUTE},
-  {KC_CALCULATOR,         _______, _______, _______, _______, _______, _______, KC_1,    KC_2,    KC_3,    KC_ASTR, KC_EQL },
+  {KC_CALCULATOR,         _______, _______,  VSBACK,  KC_F12, _______, _______, KC_1,    KC_2,    KC_3,    KC_ASTR, KC_EQL },
   {MT(MOD_LSFT, KC_CAPS), _______, _______, _______, _______, _______, _______, _______, KC_0,    KC_DOT,  KC_SLSH, MT(MOD_RSFT, KC_ENTER)},
   {KC_LCTRL,              KC_LGUI, KC_LALT, KC_APP,  _______, _______, _______, _______, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT}
 },
@@ -217,6 +218,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           }
           return false;
           break;
+        case VSBACK:
+          SEND_STRING(SS_LCTRL("-"));
+          return false;
       }
     return true;
 }
