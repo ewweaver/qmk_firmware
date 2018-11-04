@@ -219,8 +219,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           return false;
           break;
         case VSBACK:
-          SEND_STRING(SS_LCTRL("-"));
+          if (record->event.pressed) {
+            SEND_STRING(SS_LCTRL("-"));
+          }
           return false;
+          break;
       }
     return true;
 }
